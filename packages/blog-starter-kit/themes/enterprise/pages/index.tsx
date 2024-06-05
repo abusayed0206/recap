@@ -81,23 +81,23 @@ export default function Index({ publication, initialAllPosts, initialPageInfo }:
 			<Layout>
 				<Head>
 					<title>
-						{publication.displayTitle || publication.title || 'Hashnode Blog Starter Kit'}
+						{publication.displayTitle || publication.title || 'Recap'}
 					</title>
 					<meta
 						name="description"
 						content={
-							publication.descriptionSEO || publication.title || `${publication.author.name}'s Blog`
+							publication.descriptionSEO || publication.title || `${publication.author.name}'s Recap`
 						}
 					/>
 					<meta property="twitter:card" content="summary_large_image" />
 					<meta
 						property="twitter:title"
-						content={publication.displayTitle || publication.title || 'Hashnode Blog Starter Kit'}
+						content={publication.displayTitle || publication.title || 'Recap'}
 					/>
 					<meta
 						property="twitter:description"
 						content={
-							publication.descriptionSEO || publication.title || `${publication.author.name}'s Blog`
+							publication.descriptionSEO || publication.title || `${publication.author.name}'s Recap`
 						}
 					/>
 					<meta

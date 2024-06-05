@@ -29,7 +29,7 @@ export const Footer = () => {
 						<SocialLinks />
 						<p>&copy; 2024 Lutfor Rashid Sayed</p>
 						<p>
-							<a href="/privacy" className="hover:underline">
+							<a href="https://recap.sayed.page/privacy" className="hover:underline">
 								Privacy Policy
 							</a>
 						</p>
