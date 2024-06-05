@@ -761,6 +761,11 @@ export type CreateDraftInput = {
   coverImageOptions?: InputMaybe<CoverImageOptionsInput>;
   /** A flag to indicate if the comments are disabled for the resulting draft. */
   disableComments?: InputMaybe<Scalars['Boolean']['input']>;
+  /**
+   * The id of the user who owns the draft. When this field is supplied, the draft is created directly under that user's account.
+   * Only applicable for team publications.
+   */
+  draftOwner?: InputMaybe<Scalars['ID']['input']>;
   /** Information about the meta tags added to the resulting draft, used for SEO purpose. */
   metaTags?: InputMaybe<MetaTagsInput>;
   /** The URL of the original article if the draft is imported from an external source. */
@@ -1076,6 +1081,26 @@ export type DraftFeatures = {
   tableOfContents: TableOfContentsFeature;
 };
 
+export type DraftRevision = Node & {
+  __typename?: 'DraftRevision';
+  /** The name of the user who created the revision. */
+  authorName: Scalars['String']['output'];
+  /** The content of the draft revision. */
+  content: Content;
+  /** The time the revision has been created. */
+  createdAt: Scalars['DateTime']['output'];
+  /** The ID of the draft revision. */
+  id: Scalars['ID']['output'];
+};
+
+export type DraftRevisionEdge = Edge & {
+  __typename?: 'DraftRevisionEdge';
+  /** A cursor for use in pagination. */
+  cursor: Scalars['String']['output'];
+  /** A node in the connection containing a draft revision. */
+  node: DraftRevision;
+};
+
 export type DraftSettings = {
   __typename?: 'DraftSettings';
   /** A flag to indicate if the comments are disabled for the post. */
@@ -1378,6 +1403,12 @@ export type GroupedByTimeVisitors = Node & Visitors & {
   total: Scalars['Int']['output'];
 };
 
+export type HeadlessCmsFeature = Feature & {
+  __typename?: 'HeadlessCMSFeature';
+  /** A flag indicating if the Headless CMS feature is enabled or not. */
+  isEnabled: Scalars['Boolean']['output'];
+};
+
 export enum HttpRedirectionType {
   /** A permanent redirect that corresponds to the 302 HTTP status code. */
   Permanent = 'PERMANENT',
@@ -1568,6 +1599,8 @@ export type Mutation = {
   restorePost: RestorePostPayload;
   scheduleDraft: ScheduleDraftPayload;
   subscribeToNewsletter: SubscribeToNewsletterPayload;
+  /** Toggle allowContributorEdits flag to allow or restrict external contributors to further edit published articles. */
+  toggleAllowContributorEdits: ToggleAllowContributorEditsPayload;
   /**
    * Update the follow state for the user that is provided via id or username.
    * If the authenticated user does not follow the user, the mutation will follow the user.
@@ -1713,6 +1746,11 @@ export type MutationSubscribeToNewsletterArgs = {
 };
 
 
+export type MutationToggleAllowContributorEditsArgs = {
+  input: ToggleAllowContributorEditsInput;
+};
+
+
 export type MutationToggleFollowUserArgs = {
   id?: InputMaybe<Scalars['ID']['input']>;
   username?: InputMaybe<Scalars['String']['input']>;
@@ -1776,6 +1814,7 @@ export type MyUser = IUser & Node & {
   dateJoined?: Maybe<Scalars['DateTime']['output']>;
   /** Whether or not the user is deactivated. */
   deactivated: Scalars['Boolean']['output'];
+  drafts: UserDraftConnection;
   /** The users who are following this user */
   followers: UserConnection;
   /** The number of users that follow the requested user. Visible in the user's profile. */
@@ -1805,6 +1844,16 @@ export type MyUser = IUser & Node & {
   tagsFollowing: Array<Tag>;
   /** The username of the user. It is unique and tied with user's profile URL. Example - https://hashnode.com/@username */
   username: Scalars['String']['output'];
+};
+
+
+/**
+ * Basic information about the authenticated user.
+ * User must be authenticated to use this type.
+ */
+export type MyUserDraftsArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  first: Scalars['Int']['input'];
 };
 
 
@@ -2480,6 +2529,7 @@ export type PublicationPostsArgs = {
  * A publication is a blog that can be created for a user or a team.
  */
 export type PublicationPostsViaPageArgs = {
+  filter?: InputMaybe<PublicationPostsViaPageFilter>;
   page: Scalars['Int']['input'];
   pageSize: Scalars['Int']['input'];
 };
@@ -2573,6 +2623,8 @@ export type PublicationFeatures = {
   audioBlog: AudioBlogFeature;
   /** Individual styling for the publication. */
   customCSS: CustomCssFeature;
+  /** Headless CMS for the publication. */
+  headlessCMS: HeadlessCmsFeature;
   /** Newsletter feature for the publication which adds a `/newsletter` route for collecting subscribers and allows sending out newsletters. */
   newsletter: NewsletterFeature;
   /** Show the read time for blog posts. */
@@ -2754,6 +2806,23 @@ export type PublicationPostPageConnection = PageConnection & {
   pageInfo: OffsetPageInfo;
   /** The total number of posts. */
   totalDocuments: Scalars['Int']['output'];
+};
+
+export type PublicationPostsViaPageFilter = {
+  /** Remove pinned post from the result set. */
+  excludePinnedPosts?: InputMaybe<Scalars['Boolean']['input']>;
+  /**
+   * Filtering by tag slugs and tag IDs will return posts that match either of the filters.
+   *
+   * It is an "OR" filter and not an "AND" filter.
+   */
+  tagSlugs?: InputMaybe<Array<Scalars['String']['input']>>;
+  /**
+   * Filtering by tag slugs and tag IDs will return posts that match either of the filters.
+   *
+   * It is an "OR" filter and not an "AND" filter.
+   */
+  tags?: InputMaybe<Array<Scalars['ID']['input']>>;
 };
 
 /**
@@ -3136,6 +3205,8 @@ export type RoleBasedInvite = Node & {
   __typename?: 'RoleBasedInvite';
   /** The capacity of how many members to be invited by the link. */
   capacity?: Maybe<Scalars['Int']['output']>;
+  /** The date the invite was created. */
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
   /** The expiry date of the invite. */
   expiryDate?: Maybe<Scalars['DateTime']['output']>;
   /** The ID of the role based invite. */
@@ -3146,6 +3217,8 @@ export type RoleBasedInvite = Node & {
   isUnlimitedCapacity?: Maybe<Scalars['Boolean']['output']>;
   /** The role assigned to the user in the publication. */
   role: UserPublicationRole;
+  /** The number of members that have already used the link to join the team. */
+  usedCapacity?: Maybe<Scalars['Int']['output']>;
 };
 
 /** Information to help in seo related meta tags. */
@@ -3220,6 +3293,7 @@ export enum Scope {
   UpdateReply = 'update_reply',
   WebhookAdmin = 'webhook_admin',
   WriteDraft = 'write_draft',
+  WriteDraftRevision = 'write_draft_revision',
   WritePost = 'write_post',
   WriteSeries = 'write_series',
   WriteStaticPage = 'write_static_page',
@@ -3240,12 +3314,14 @@ export type SearchPostConnection = Connection & {
 };
 
 export type SearchPostsOfPublicationFilter = {
+  /** An array of author Ids to filter the posts. */
+  authorIds?: InputMaybe<Array<Scalars['ID']['input']>>;
   /** Only return posts that are deleted. Query returns active posts by default, set this to true to return deleted posts. */
   deletedOnly?: InputMaybe<Scalars['Boolean']['input']>;
   /** The ID of publications to search from. */
   publicationId: Scalars['ObjectId']['input'];
   /** The query to be searched in post. */
-  query: Scalars['String']['input'];
+  query?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type SearchUser = Node & {
@@ -3514,6 +3590,15 @@ export type TextSelectionSharerFeature = Feature & {
   __typename?: 'TextSelectionSharerFeature';
   /** A flag indicating if the text selection sharer feature is enabled or not. */
   isEnabled: Scalars['Boolean']['output'];
+};
+
+export type ToggleAllowContributorEditsInput = {
+  publicationId: Scalars['ID']['input'];
+};
+
+export type ToggleAllowContributorEditsPayload = {
+  __typename?: 'ToggleAllowContributorEditsPayload';
+  publication?: Maybe<Publication>;
 };
 
 /** Payload for the toggleFollowingUser mutation. */
@@ -3790,6 +3875,26 @@ export type UserConnection = PageConnection & {
   totalDocuments: Scalars['Int']['output'];
 };
 
+/** Drafts that belong to a user. */
+export type UserDraftConnection = Connection & {
+  __typename?: 'UserDraftConnection';
+  /** A list of edges. */
+  edges: Array<UserDraftEdge>;
+  /** Generic information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The total number of documents in the connection. */
+  totalDocuments: Scalars['Int']['output'];
+};
+
+/** A generic type which holds a draft during pagination. */
+export type UserDraftEdge = Edge & {
+  __typename?: 'UserDraftEdge';
+  /** A cursor for use in pagination. */
+  cursor: Scalars['String']['output'];
+  /** The item at the end of UserDraftEdge. */
+  node: Draft;
+};
+
 /** Contains a node of type user and cursor for pagination. */
 export type UserEdge = Edge & {
   __typename?: 'UserEdge';
@@ -3923,6 +4028,10 @@ export type UserRecommendingPublicationEdge = {
   /** The amount of followers the publication has gained by recommendations from the publication referenced in `node`. */
   totalFollowersGained: Scalars['Int']['output'];
 };
+
+export enum ValidationMethod {
+  Id = 'ID'
+}
 
 /**
  * Contains the flag indicating if the view count feature is enabled or not.

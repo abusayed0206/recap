@@ -1,14 +1,14 @@
 import { resizeImage } from '@starter-kit/utils/image';
 import Link from 'next/link';
-import { useAppContext } from './contexts/appContext';
 import { PublicationFragment } from '../generated/graphql';
+import { useAppContext } from './contexts/appContext';
 
 const getPublicationLogo = (publication: PublicationFragment, isSidebar?: boolean) => {
 	if (isSidebar) {
 		return publication.preferences.logo; // Always display light mode logo in sidebar
 	}
 	return publication.preferences.darkMode?.logo || publication.preferences.logo;
-}
+};
 
 export const PublicationLogo = ({ isSidebar }: { isSidebar?: boolean }) => {
 	const { publication } = useAppContext();
@@ -28,7 +28,6 @@ export const PublicationLogo = ({ isSidebar }: { isSidebar?: boolean }) => {
 							alt={publication.title}
 							src={resizeImage(PUBLICATION_LOGO, { w: 320, h: 80 })}
 						/>
-						<span className="text-2xl font-semibold text-white md:text-3xl">Blog</span>
 					</>
 				) : (
 					<span
