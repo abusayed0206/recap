@@ -97,6 +97,9 @@ export const Header = () => {
 						<PublicationLogo />
 					</div>
 				</div>
+				<div className="col-span-2 flex flex-row items-center justify-end gap-5 text-slate-300 lg:col-span-3">
+					<nav className="hidden lg:block">{navList}</nav>
+				</div>
 			</Container>
 			<div className="mt-5 flex justify-center lg:hidden">
 				<PublicationLogo />

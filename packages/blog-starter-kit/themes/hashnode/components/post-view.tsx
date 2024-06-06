@@ -178,10 +178,6 @@ function PostView(props: any) {
 								)}
 							</div>
 
-							{post.publication && post.publication.features.newsletter.isEnabled && (
-								<PublicationSubscribeStandOut />
-							)}
-
 							{post?.tags && post.tags.length > 0 && (
 								<div className="mb-5 flex w-full flex-row flex-wrap justify-center md:mb-0">
 									{post.tags.map((tag: any) => (

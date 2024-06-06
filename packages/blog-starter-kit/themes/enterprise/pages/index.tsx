@@ -10,7 +10,6 @@ import { Container } from '../components/container';
 import { AppProvider } from '../components/contexts/appContext';
 import { Footer } from '../components/footer';
 import { Header } from '../components/header';
-import { HeroPost } from '../components/hero-post';
 import { ArticleSVG, ChevronDownSVG } from '../components/icons';
 import { Layout } from '../components/layout';
 import { MorePosts } from '../components/more-posts';
@@ -80,13 +79,13 @@ export default function Index({ publication, initialAllPosts, initialPageInfo }:
 		<AppProvider publication={publication}>
 			<Layout>
 				<Head>
-					<title>
-						{publication.displayTitle || publication.title || 'Recap'}
-					</title>
+					<title>{publication.displayTitle || publication.title || 'Recap'}</title>
 					<meta
 						name="description"
 						content={
-							publication.descriptionSEO || publication.title || `${publication.author.name}'s Recap`
+							publication.descriptionSEO ||
+							publication.title ||
+							`${publication.author.name}'s Recap`
 						}
 					/>
 					<meta property="twitter:card" content="summary_large_image" />
@@ -97,7 +96,9 @@ export default function Index({ publication, initialAllPosts, initialPageInfo }:
 					<meta
 						property="twitter:description"
 						content={
-							publication.descriptionSEO || publication.title || `${publication.author.name}'s Recap`
+							publication.descriptionSEO ||
+							publication.title ||
+							`${publication.author.name}'s Recap`
 						}
 					/>
 					<meta
@@ -126,25 +127,40 @@ export default function Index({ publication, initialAllPosts, initialPageInfo }:
 									<ArticleSVG clasName="stroke-current" />
 								</div>
 								<p className="text-xl font-semibold ">
-									Hang tight! We&apos;re drafting the first article.
+									Hang tight! We&apos;re drafting the first recap.
 								</p>
 							</div>
 						</div>
 					)}
-
 					<div className="grid items-start gap-6 xl:grid-cols-2">
-						<div className="col-span-1">
-							{firstPost && (
-								<HeroPost
-									title={firstPost.title}
-									coverImage={firstPost.coverImage?.url || DEFAULT_COVER}
-									date={firstPost.publishedAt}
-									slug={firstPost.slug}
-									excerpt={firstPost.brief}
+						<div className="col-span-1 flex items-center justify-center ">
+							<a href="https://trakt.tv/users/lrs" target="_blank" rel="noopener noreferrer">
+								<img
+									src="https://trakt-widgets.vercel.app/lrs/profile/poster"
+									alt="Watched Card"
+									className="rounded"
+									style={{ borderRadius: '10px' }}
 								/>
-							)}
+							</a>
 						</div>
-						<div className="col-span-1 flex flex-col gap-6">{secondaryPosts}</div>
+						<div className="col-span-1 flex flex-col gap-6">
+							<a href="https://trakt.tv/users/lrs" target="_blank" rel="noopener noreferrer">
+								<img
+									src="https://trakt-widgets.vercel.app/lrs/watched/card"
+									alt="Watching Card"
+									className="rounded"
+									style={{ borderRadius: '10px' }}
+								/>
+							</a>
+							<a href="https://trakt.tv/users/lrs" target="_blank" rel="noopener noreferrer">
+								<img
+									src="https://trakt-widgets.vercel.app/lrs/watching/banner"
+									alt="Watched Card"
+									className="rounded"
+									style={{ borderRadius: '10px' }}
+								/>
+							</a>
+						</div>
 					</div>
 
 					{morePosts.length > 0 && (
