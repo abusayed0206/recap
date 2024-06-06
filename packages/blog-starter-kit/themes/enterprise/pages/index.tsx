@@ -10,6 +10,7 @@ import { Container } from '../components/container';
 import { AppProvider } from '../components/contexts/appContext';
 import { Footer } from '../components/footer';
 import { Header } from '../components/header';
+import { HeroPost } from '../components/hero-post';
 import { ArticleSVG, ChevronDownSVG } from '../components/icons';
 import { Layout } from '../components/layout';
 import { MorePosts } from '../components/more-posts';
@@ -127,39 +128,62 @@ export default function Index({ publication, initialAllPosts, initialPageInfo }:
 									<ArticleSVG clasName="stroke-current" />
 								</div>
 								<p className="text-xl font-semibold ">
-									Hang tight! We&apos;re drafting the first recap.
+									Hang tight! We&apos;re drafting the first recap..
 								</p>
 							</div>
 						</div>
 					)}
-					<div className="grid items-start gap-6 xl:grid-cols-2">
-						<div className="col-span-1 flex items-center justify-center ">
-							<a href="https://trakt.tv/users/lrs" target="_blank" rel="noopener noreferrer">
-								<img
-									src="https://trakt-widgets.vercel.app/lrs/profile/poster"
-									alt="Watched Card"
-									className="rounded"
-									style={{ borderRadius: '10px' }}
-								/>
-							</a>
+					<div>
+						<div className="grid items-start gap-6 xl:grid-cols-2">
+							<div className="col-span-1 flex items-center justify-center ">
+								<a href="https://trakt.tv/users/lrs" target="_blank" rel="noopener noreferrer">
+									<img
+										src="https://trakt-widgets.vercel.app/lrs/profile/poster"
+										alt="Watched Card"
+										className="rounded"
+										style={{ borderRadius: '10px' }}
+									/>
+								</a>
+							</div>
+							<div className="col-span-1 flex flex-col gap-6">
+								<a href="https://trakt.tv/users/lrs" target="_blank" rel="noopener noreferrer">
+									<img
+										src="https://trakt-widgets.vercel.app/lrs/watched/card"
+										alt="Watching Card"
+										className="rounded"
+										style={{ borderRadius: '10px' }}
+									/>
+								</a>
+								<a href="https://trakt.tv/users/lrs" target="_blank" rel="noopener noreferrer">
+									<img
+										src="https://trakt-widgets.vercel.app/lrs/watching/banner"
+										alt="Watched Card"
+										className="rounded"
+										style={{ borderRadius: '10px' }}
+									/>
+								</a>
+							</div>
 						</div>
-						<div className="col-span-1 flex flex-col gap-6">
-							<a href="https://trakt.tv/users/lrs" target="_blank" rel="noopener noreferrer">
-								<img
-									src="https://trakt-widgets.vercel.app/lrs/watched/card"
-									alt="Watching Card"
-									className="rounded"
-									style={{ borderRadius: '10px' }}
-								/>
-							</a>
-							<a href="https://trakt.tv/users/lrs" target="_blank" rel="noopener noreferrer">
-								<img
-									src="https://trakt-widgets.vercel.app/lrs/watching/banner"
-									alt="Watched Card"
-									className="rounded"
-									style={{ borderRadius: '10px' }}
-								/>
-							</a>
+					</div>
+					<div>
+						<div className="mb-10 flex flex-col items-center gap-10">
+							<h1 className="text-xl font-bold leading-tight tracking-tight text-slate-900 dark:text-neutral-50 lg:text-3xl">
+								Latest Recaps
+							</h1>
+						</div>
+						<div className="grid items-start gap-6 xl:grid-cols-2">
+							<div className="col-span-1">
+								{firstPost && (
+									<HeroPost
+										title={firstPost.title}
+										coverImage={firstPost.coverImage?.url || DEFAULT_COVER}
+										date={firstPost.publishedAt}
+										slug={firstPost.slug}
+										excerpt={firstPost.brief}
+									/>
+								)}
+							</div>
+							<div className="col-span-1 flex flex-col gap-6">{secondaryPosts}</div>
 						</div>
 					</div>
 
@@ -172,7 +196,7 @@ export default function Index({ publication, initialAllPosts, initialPageInfo }:
 										onClick={loadMore}
 										type="outline"
 										icon={<ChevronDownSVG className="h-5 w-5 stroke-current" />}
-										label="Load more Recaps"
+										label="Load more recaps"
 									/>
 								</div>
 							)}

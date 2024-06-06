@@ -11,7 +11,7 @@ export const MorePosts = ({ posts, context }: Props) => {
 		<section className="mb-10 flex flex-col items-center gap-10">
 			{context === 'home' && (
 				<h2 className="text-xl font-bold leading-tight tracking-tight text-slate-900 dark:text-neutral-50 lg:text-3xl">
-					Recaps on  Movies/TV Series
+					More Recaps on  Movies/TV Series
 				</h2>
 			)}
 			<div className="grid items-start gap-5 md:grid-cols-2 xl:grid-cols-3">
