@@ -133,38 +133,20 @@ export default function Index({ publication, initialAllPosts, initialPageInfo }:
 							</div>
 						</div>
 					)}
-					<div>
-						<div className="grid items-start gap-6 xl:grid-cols-2">
-							<div className="col-span-1 flex items-center justify-center ">
+					<div className="flex items-center justify-center">
+						<div className="grid items-start gap-6 xl:grid-cols-1">
+							<div className="col-span-1 flex items-center justify-center">
 								<a href="https://trakt.tv/users/lrs" target="_blank" rel="noopener noreferrer">
 									<img
 										src="https://trakt-widgets.vercel.app/lrs/profile/poster"
 										alt="Watched Card"
 										className="rounded"
-										style={{ borderRadius: '10px' }}
-									/>
-								</a>
-							</div>
-							<div className="col-span-1 flex flex-col gap-6">
-								<a href="https://trakt.tv/users/lrs" target="_blank" rel="noopener noreferrer">
-									<img
-										src="https://trakt-widgets.vercel.app/lrs/watched/card"
-										alt="Watching Card"
-										className="rounded"
-										style={{ borderRadius: '10px' }}
-									/>
-								</a>
-								<a href="https://trakt.tv/users/lrs" target="_blank" rel="noopener noreferrer">
-									<img
-										src="https://trakt-widgets.vercel.app/lrs/watching/banner"
-										alt="Watched Card"
-										className="rounded"
-										style={{ borderRadius: '10px' }}
 									/>
 								</a>
 							</div>
 						</div>
 					</div>
+
 					<div>
 						<div className="mb-10 flex flex-col items-center gap-10">
 							<h1 className="text-xl font-bold leading-tight tracking-tight text-slate-900 dark:text-neutral-50 lg:text-3xl">

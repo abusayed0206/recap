@@ -27,10 +27,24 @@ export const Footer = () => {
 				<div className="flex w-full items-center justify-center">
 					<div className="flex w-full max-w-md flex-col items-center gap-5 text-center text-slate-600 dark:text-neutral-300">
 						<SocialLinks />
+
+						<a href="https://trakt.tv/users/lrs" target="_blank" rel="noopener noreferrer">
+							<img
+								src="https://trakt-widgets.vercel.app/lrs/watched/banner"
+								alt="Watched Banner"
+								className="rounded"
+								style={{ borderRadius: '10px' }}
+							/>
+						</a>
 						<p>&copy; 2024 Lutfor Rashid Sayed</p>
 						<p>
 							<a href="https://recap.sayed.page/privacy" className="hover:underline">
 								Privacy Policy
+							</a>
+						</p>
+						<p>
+							<a href="https://tmdb.abusayed.dev/" className="hover:underline" target='_blank'>
+								TMDB
 							</a>
 						</p>
 					</div>
