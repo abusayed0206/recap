@@ -45,7 +45,7 @@ The recommended approach is deploying to Vercel. If you don't have an account al
 
 - Fork this repo
 - Create a new project on Vercel and connect this repo
-- It's a monorepo. So, choose either `packages/blog-starter-kit/themes/enterprise`, `packages/blog-starter-kit/themes/hashnode` or `packages/blog-starter-kit/themes/personal` as the root directory while importing on Vercel.
+- It's a monorepo, So choose either `packages/blog-starter-kit/themes/enterprise`, `packages/blog-starter-kit/themes/hashnode`, or `packages/blog-starter-kit/themes/personal` as the root directory while importing on Vercel.
 
   ![selecting the directory to deploy a monorepo](https://cdn.hashnode.com/res/hashnode/image/upload/v1698839884060/O8OoBML5v.PNG?auto=format)
 
@@ -67,7 +67,7 @@ Follow the steps below if you would like to install your blog under a custom dom
 
 #### Vercel
 
-If your main project is deployed on Vercel, add the following rewrite to `next.config.js`:
+If your main project is deployed on Vercel, add the following rewrite to `next.config.js` file:
 
 ```
 async rewrites() {
@@ -86,7 +86,9 @@ async rewrites() {
 
 Once you deploy your project, the subpath installation should work successfully.
 
-Note: If you are updating your environment variables in Vercel, make sure to manually redeploy to see the changes.
+> Note: <br>
+> - If you are updating your environment variables in Vercel, make sure to manually redeploy to see the changes.
+> - Your main project refers to the project you'll have to have your blog subpath on; for example, if you'd like your blog subpath to be `https://portfolio.com/blog`, then your main project would be `https://portfolio.com`. This means that the rewrites function should be added to the codebase of the main project, not the starter kit codebase.
 
 #### Cloudflare
 
@@ -131,9 +133,9 @@ After the above step is done, follow these steps to add the worker route:
 - Click on `Add route` and add `https://yourdomain/*` , then select the worker you just added above and click `Save`.
 - Go to `https://yourdomain/yoursubpath` and now you should be able to see your blogs.
 
-Be sure to replace the values of `subpath` and `blogBaseUrl` in the above code snippet. This way cloudflare will proxy all the requests starting with `yourdomain.com/blog` to your headless blog, and other requests will hit your origin as usual.
+Make sure to replace the values of `subpath` and `blogBaseUrl` in the above code snippet. This way, Cloudflare will proxy all the requests starting with `yourdomain.com/blog` to your headless blog, and other requests will hit your origin as usual.
 
-If your main domain is hosted elsewhere, you need to involve engineers from your team to create above rewrites.
+If your main domain is hosted elsewhere, you need to involve engineers from your team to create the above rewrites.
 
 ### Step 3
 
@@ -141,7 +143,7 @@ Now that you have deployed the starter kit on your own domain, you need to tell 
 
 ![enable headless mode](https://cdn.hashnode.com/res/hashnode/image/upload/v1697486863293/zMMctLjRZ.png?auto=format)
 
-After enabling, enter your blog URL like the following and save.
+After enabling, enter your blog URL as shown below and save.
 
 ![blog base url](https://cdn.hashnode.com/res/hashnode/image/upload/v1697487035077/1sIyw_0v1.png?auto=format)
 
