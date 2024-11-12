@@ -47,6 +47,11 @@ export const Footer = () => {
 								TMDB
 							</a>
 						</p>
+						<p>
+							<a href="https://letterboxd.com/abusayed/" className="hover:underline" target='_blank'>
+								LetterBoxd
+							</a>
+						</p>
 					</div>
 				</div>
 			</Container>
